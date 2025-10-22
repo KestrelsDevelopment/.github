@@ -20,27 +20,8 @@ jobs:
         with:
           nix_path: nixpkgs=channel:nixos-unstable
 
-      - name: Run nix-instantiate
-        run: |
-          set -euo pipefail
-
-          failures=0
-
-          for cfg in $(git ls-files '*.nix'); do
-            if nix-instantiate --parse $cfg > /dev/null; then
-              echo "  ✓ $cfg"
-            else
-              echo "  ✗ $cfg"
-              failures=$((failures+1))
-            fi
-          done
-
-          if [ "$failures" -ne 0 ]; then
-            echo -e "\n❌ $failures files failed parsing."
-            exit 1
-          else
-            echo -e "\n✅ All files parsed successfully!"
-          fi
+      - name: Parse
+        uses: KestrelsDevelopment/.github/.github/actions/nix-parse@main
 
   check-current:
     name: Check with current flakes

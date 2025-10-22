@@ -1,0 +1,29 @@
+name: Parse nix files
+description: Attempt to parse all .nix files in the repository.
+author: AceOfKestrels
+
+runs:
+    using: composite
+    steps: 
+      - name: Parse
+        shell: bash
+        run: |
+            set -euo pipefail
+
+            failures=0
+
+            for file in $(git ls-files '*.nix'); do
+                if nix-instantiate --parse "$file" > /dev/null; then
+                    echo "  ✓ $file"
+                else
+                    echo "  ✗ $file"
+                    failures=$((failures+1))
+                fi
+            done
+
+            if [ "$failures" -ne 0 ]; then
+                echo "❌ $failures files failed parsing."
+                exit 1
+            else
+                echo "✅ All files parsed successfully!"
+            fi
