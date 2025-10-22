@@ -5,7 +5,7 @@ author: AceOfKestrels
 runs:
     using: composite
     steps: 
-      - name: Parse
+      - name: Parse Nix files
         shell: bash
         run: |
             set -euo pipefail
@@ -20,6 +20,8 @@ runs:
                     failures=$((failures+1))
                 fi
             done
+
+            echo
 
             if [ "$failures" -ne 0 ]; then
                 echo "❌ $failures files failed parsing."
