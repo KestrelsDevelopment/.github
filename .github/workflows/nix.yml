@@ -1,0 +1,13 @@
+name: "Nix CI"
+
+on:
+    workflow_call:
+
+permissions:
+    contents: read
+
+jobs:
+    build:
+        uses: KestrelsDevelopment/.github/.github/workflows/nix-build.yml@main 
+    lint:
+        uses: KestrelsDevelopment/.github/.github/workflows/nix-lint.yml@main 
