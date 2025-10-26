@@ -29,6 +29,7 @@ runs:
                 if [ "$UPDATE_LOCK_FILE" == "true" ]; then
                     if ! nix flake update --flake "$flake"; then
                         echo "  ✗ failed to update lock file for $flake"
+                        failures=$((failures+1))
                         continue
                     fi
                 fi
