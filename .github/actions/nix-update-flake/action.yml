@@ -1,0 +1,19 @@
+name: Update nix flake
+description: Update the nix flake and commit the changes back
+author: AceOfKestrels
+
+inputs:
+    flake-path:
+        description: "The path to the flake relative to the repository root"
+        required: false
+        default: .
+
+runs:
+    using: composite
+    steps: 
+      - name: "Update lock file"
+        shell: bash
+        env:
+            FLAKE_PATH: ${{ inputs.flake-path }}
+            NIX_CONFIG: "experimental-features = nix-command flakes"
+        run: nix flake update --flake "./$FLAKE_PATH"
