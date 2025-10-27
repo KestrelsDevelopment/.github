@@ -1,0 +1,29 @@
+name: Build dotnet
+description: Build the dotnet solution
+author: AceOfKestrels
+
+inputs:
+    solution-path:
+        description: "The path to the .sln file relative to the repository root"
+        required: false
+        default: .
+    configuration:
+        description: "The configuration to use for the build"
+        required: false
+        default: Release
+
+runs:
+    using: composite
+    steps: 
+      - name: "Install dependencies"
+        shell: bash
+        env:
+            SLN_PATH: ${{ inputs.solution-path }}
+        run: dotnet restore --verbosity normal "$SLN_PATH"
+
+      - name: "Build solution"
+        shell: bash
+        env:
+            SLN_PATH: ${{ inputs.solution-path }}
+            BUILD_CONF: ${{ inputs.configuration }}
+        run: dotnet build --no-restore --verbosity normal --configuration "$BUILD_CONF" "$SLN_PATH"

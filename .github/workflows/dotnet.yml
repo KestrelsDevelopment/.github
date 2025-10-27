@@ -1,0 +1,67 @@
+name: "Dotnet CI"
+
+on:
+    workflow_call:
+        inputs:
+            run-tests:
+                type: boolean
+                required: false
+                default: true
+            dotnet-version:
+                description: The dotnet version to use
+                required: true
+                type: string
+            solution-path:
+                description: The path to the solution file
+                required: false
+                type: string
+                default: .
+            configuration:
+                description: The configuration to use for the builds
+                required: false
+                type: string
+                default: Release
+
+permissions:
+    contents: read
+
+jobs:
+    build:
+        name: Build
+        runs-on: ubuntu-latest
+
+        steps:
+          - name: Checkout repository
+            uses: actions/checkout@v3
+
+          - name: Setup dotnet
+            uses: actions/setup-dotnet@v4
+            with:
+                dotnet-version: ${{ inputs.dotnet-version }}
+
+          - name: Build solution
+            uses: KestrelsDevelopment/.github/.github/actions/dotnet-build@main
+            with:
+                solution-path: ${{ inputs.solution-path }}
+                configuration: ${{ inputs.configuration }}
+
+    test:
+        name: Test
+        runs-on: ubuntu-latest
+        if: ${{ inputs.run-tests }}
+
+        steps:
+          - name: Checkout repository
+            uses: actions/checkout@v3
+
+          - name: Setup dotnet
+            uses: actions/setup-dotnet@v4
+            with:
+                dotnet-version: ${{ inputs.dotnet-version }}
+
+          - name: Build solution
+            uses: KestrelsDevelopment/.github/.github/actions/dotnet-test@main
+            with:
+                solution-path: ${{ inputs.solution-path }}
+                configuration: ${{ inputs.configuration }}
+
