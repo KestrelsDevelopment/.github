@@ -1,8 +1,16 @@
-name: Build dotnet
-description: Build the dotnet solution
+name: Test dotnet
+description: Test the dotnet solution
 author: AceOfKestrels
 
 inputs:
+    restore:
+        description: "Whether to restore dependencies prior to building (implies build: true)"
+        required: false
+        default: false
+    build:
+        description: "Whether to build the solution prior to running tests"
+        required: false
+        default: false
     solution-path:
         description: "The path to the .sln file relative to the repository root"
         required: false
@@ -16,12 +24,13 @@ runs:
     using: composite
     steps: 
       - name: "Install dependencies"
-        shell: bash
-        env:
-            SLN_PATH: ${{ inputs.solution-path }}
-        run: dotnet restore --verbosity normal "$SLN_PATH"
+        if: ${{ inputs.restore == true }}
+        uses: KestrelsDevelopment/.github/.github/actions/dotnet-restore@main
+        with:
+            solution-path: ${{ inputs.solution-path }}
 
       - name: "Build solution"
+        if: ${{ inputs.restore == true || inputs.build == true }}
         shell: bash
         env:
             SLN_PATH: ${{ inputs.solution-path }}

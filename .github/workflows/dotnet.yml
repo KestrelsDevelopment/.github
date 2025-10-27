@@ -39,6 +39,11 @@ jobs:
             with:
                 dotnet-version: ${{ inputs.dotnet-version }}
 
+          - name: Install dependencies
+            uses: KestrelsDevelopment/.github/.github/actions/dotnet-restore@main
+            with:
+                solution-path: ${{ inputs.solution-path }}
+
           - name: Build solution
             uses: KestrelsDevelopment/.github/.github/actions/dotnet-build@main
             with:
@@ -59,9 +64,19 @@ jobs:
             with:
                 dotnet-version: ${{ inputs.dotnet-version }}
 
+          - name: Install dependencies
+            uses: KestrelsDevelopment/.github/.github/actions/dotnet-restore@main
+            with:
+                solution-path: ${{ inputs.solution-path }}
+
           - name: Build solution
-            uses: KestrelsDevelopment/.github/.github/actions/dotnet-test@main
+            uses: KestrelsDevelopment/.github/.github/actions/dotnet-build@main
             with:
                 solution-path: ${{ inputs.solution-path }}
                 configuration: ${{ inputs.configuration }}
 
+          - name: Run tests
+            uses: KestrelsDevelopment/.github/.github/actions/dotnet-test@main
+            with:
+                solution-path: ${{ inputs.solution-path }}
+                configuration: ${{ inputs.configuration }}

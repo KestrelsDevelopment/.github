@@ -3,6 +3,10 @@ description: Build the dotnet solution
 author: AceOfKestrels
 
 inputs:
+    restore:
+        description: "Whether to restore dependencies prior to building"
+        required: false
+        default: false
     solution-path:
         description: "The path to the .sln file relative to the repository root"
         required: false
@@ -16,10 +20,10 @@ runs:
     using: composite
     steps: 
       - name: "Install dependencies"
-        shell: bash
-        env:
-            SLN_PATH: ${{ inputs.solution-path }}
-        run: dotnet restore --verbosity normal "$SLN_PATH"
+        if: ${{ inputs.restore == true }}
+        uses: KestrelsDevelopment/.github/.github/actions/dotnet-restore@main
+        with:
+            solution-path: ${{ inputs.solution-path }}
 
       - name: "Build solution"
         shell: bash
