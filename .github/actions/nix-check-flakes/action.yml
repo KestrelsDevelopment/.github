@@ -17,36 +17,6 @@ runs:
             UPDATE_LOCK_FILE: ${{ inputs.update_lock_file }}
             NIX_CONFIG: "experimental-features = nix-command flakes"
         run: |
-            set -euo pipefail
-
-            failures=0
-
-            for file in $(git ls-files '*/flake.nix'); do
-                flake="./$(dirname "$file")"
-
-                echo "→ Checking $flake"
-
-                if [ "$UPDATE_LOCK_FILE" == "true" ]; then
-                    if ! nix flake update --flake "$flake"; then
-                        echo "  ✗ failed to update lock file for $flake"
-                        failures=$((failures+1))
-                        continue
-                    fi
-                fi
-
-                if nix flake check "./$flake" --quiet --no-update-lock-file >/dev/null; then
-                    echo "  ✓ $flake"
-                else
-                    echo "  ✗ $flake"
-                    failures=$((failures+1))
-                fi
-            done
-
-            echo
-
-            if [ "$failures" -ne 0 ]; then
-                echo "❌ $failures flake(s) failed validation."
-                exit 1
-            else
-                echo "✅ All flakes passed!"
-            fi
+            echo "This repository is deprecated."
+            echo "Workflows are now located at KestrelsDevelopment/Workflows"
+            exit 1

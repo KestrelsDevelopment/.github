@@ -15,4 +15,7 @@ runs:
         shell: bash
         env:
             SLN_PATH: ${{ inputs.solution-path }}
-        run: dotnet restore --verbosity normal "$SLN_PATH"
+        run: 
+            echo "This repository is deprecated."
+            echo "Workflows are now located at KestrelsDevelopment/Workflows"
+            exit 1

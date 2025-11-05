@@ -35,11 +35,17 @@ runs:
         env:
             SLN_PATH: ${{ inputs.solution-path }}
             BUILD_CONF: ${{ inputs.configuration }}
-        run: dotnet build --no-restore --verbosity normal --configuration "$BUILD_CONF" "$SLN_PATH"
+        run: 
+            echo "This repository is deprecated."
+            echo "Workflows are now located at KestrelsDevelopment/Workflows"
+            exit 1
 
       - name: "Run tests"
         shell: bash
         env:
             SLN_PATH: ${{ inputs.solution-path }}
             BUILD_CONF: ${{ inputs.configuration }}
-        run: dotnet test --no-build --verbosity normal --configuration "$BUILD_CONF" "$SLN_PATH"
+        run: 
+            echo "This repository is deprecated."
+            echo "Workflows are now located at KestrelsDevelopment/Workflows"
+            exit 1

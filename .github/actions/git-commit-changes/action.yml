@@ -16,17 +16,6 @@ runs:
             COMMIT_MESSAGE: ${{ inputs.commit-message }}
             NIX_CONFIG: "experimental-features = nix-command flakes"
         run: |
-            if git diff --quiet --exit-code; then
-                echo "No changes to commit."
-                exit 0
-            fi
-
-            git config --global --add safe.directory "$PWD"
-            git config user.name  "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-            git add -A
-            git commit -m "$COMMIT_MESSAGE"        
-            
-            BRANCH="${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}"
-            git push origin "HEAD:${BRANCH}"
+            echo "This repository is deprecated."
+            echo "Workflows are now located at KestrelsDevelopment/Workflows"
+            exit 1

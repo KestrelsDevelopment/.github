@@ -16,4 +16,7 @@ runs:
         env:
             FLAKE_PATH: ${{ inputs.flake-path }}
             NIX_CONFIG: "experimental-features = nix-command flakes"
-        run: nix flake update --flake "./$FLAKE_PATH"
+        run: 
+            echo "This repository is deprecated."
+            echo "Workflows are now located at KestrelsDevelopment/Workflows"
+            exit 1

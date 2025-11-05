@@ -22,25 +22,9 @@ jobs:
 
       - name: Run nixfmt --check
         run: |
-          set -euo pipefail
-
-          failures=0
-
-          for cfg in $(git ls-files '*.nix'); do
-            if nix run nixpkgs#nixfmt-rfc-style -- --check --indent=4 $cfg >/dev/null 2>/dev/null; then
-              echo "  ✓ $cfg"
-            else
-              echo "  ✗ $cfg"
-              failures=$((failures+1))
-            fi
-          done
-
-          if [ "$failures" -ne 0 ]; then
-            echo -e "\n❌ $failures files failed linting."
+            echo "This repository is deprecated."
+            echo "Workflows are now located at KestrelsDevelopment/Workflows"
             exit 1
-          else
-            echo -e "\n✅ All files passed linting!"
-          fi
 
   lint-bash:
     name: Lint-Bash
@@ -56,25 +40,9 @@ jobs:
 
       - name: Run ShellCheck
         run: |
-          set -euo pipefail
-
-          failures=0
-
-          for script in $(git ls-files '*.sh'); do
-            if shellcheck "$script"; then
-              echo "  ✓ $script"
-            else
-              echo "  ✗ $script"
-              failures=$((failures+1))
-            fi
-          done
-
-          if [ "$failures" -ne 0 ]; then
-            echo -e "\n❌ $failures files failed linting."
+            echo "This repository is deprecated."
+            echo "Workflows are now located at KestrelsDevelopment/Workflows"
             exit 1
-          else
-            echo -e "\n✅ All files passed linting!"
-          fi
 
   lint-zsh:
     name: Lint-Zsh
@@ -91,22 +59,6 @@ jobs:
 
       - name: Syntax check files with Zsh
         run: |
-          set -euo pipefail
-
-          failures=0
-
-          for script in $(git ls-files '*.sh'); do
-            if zsh -n "$script"; then
-              echo "  ✓ $script"
-            else
-              echo "  ✗ $script"
-              failures=$((failures+1))
-            fi
-          done
-
-          if [ "$failures" -ne 0 ]; then
-            echo -e "\n❌ $failures files failed zsh syntax check."
+            echo "This repository is deprecated."
+            echo "Workflows are now located at KestrelsDevelopment/Workflows"
             exit 1
-          else
-            echo -e "\n✅ All files passed zsh syntax check!"
-          fi
